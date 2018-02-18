@@ -1,0 +1,37 @@
+{%  extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <div class="row">
+        <div style="margin: auto; width: 50%">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3>{{ object.pr_title }}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <p style="padding-top: 25px"><strong>Code Review URL:</strong> 
+                                <a href="{{ object.pr_url }}">
+                                    {{object.pr_url}}
+                                </a>
+                            </p>
+                            <p><strong>Code Review Requested By:</strong> 
+                                <a href="https://github.com/{{ object.github_username }}">
+                                    {{ object.github_username }}
+                                </a>
+                            </p>
+                            <p><strong>Amount (ETH): </strong> {{object.amount|floatformat:3}} </p>
+                            <p><strong>Description: </strong> {{object.description}}</p>
+                            <p><strong>Keywords: </strong> {{object.keywords}}</p>
+                            <p><strong>Expires In: </strong> {% widthratio object.expires 3600 1 %} hour(s) </p>
+                            <p><strong>Experience Level: </strong> {{object.experience_level}}</p>   
+                            <p><strong>Project Length: </strong> {{object.project_length}}</p>     
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %}

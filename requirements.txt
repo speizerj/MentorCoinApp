@@ -1,0 +1,7 @@
+django==2.0
+django-widget-tweaks
+django-environ
+psycopg2
+django-debug-toolbar
+django-allauth
+

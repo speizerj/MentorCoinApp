@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+body.home {
+    /* The image used */
+    background-image: url("{% static 'images/Background17.jpg' %}");
+
+    /* Set a specific height */
+    height: 2000px;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+
+
+</style>
+<style> #header { display: none } </style>
+<div class="parallax">
+
+	<div class="row">
+		
+		<div class="col-xs-12 col-centered">
+			<img style="width: 100%" src="{% static 'images/logo_transparent.png' %}">
+		</div>
+	</div>
+	<div class="row" style="padding-top: 60px">
+		<div class="col-xs-12 col-centered">
+			<img style="width: 100%" src="{% static 'images/git_together.png' %}">
+		</div>
+	</div>
+	<div class="row" style="padding-top: 60px">
+		<div class="col-xs-6 col-centered">
+				<img style="width: 100%" src="{% static 'images/senior_dev_quote.png' %}">			
+		</div>
+			<div class="col-xs-6 col-centered">
+				<img style="width: 100%" src="{% static 'images/junior_dev_quote.png' %}">			
+		</div>
+	</div>
+		  
+	  
+</div>
+{% endblock %}

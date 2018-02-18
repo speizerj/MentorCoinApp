@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content-header %}
+    <h1>Server Error</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <p>Oops - looks like the server is having issues. If this continues, please contact the app administrator.</p>
+            <p>Server error code: 500</p>
+        </div>
+    </div>
+{% endblock %}

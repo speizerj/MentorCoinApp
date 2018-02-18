@@ -1,0 +1,27 @@
+.bufficorn-modal {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background: rgba(255,255,255,.8);
+}
+
+.bufficorn-modal__content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 40%;
+	height: 500px;
+	transform: translate(-50%, -50%);
+}
+
+.bufficorn {
+	display: block;
+	margin: 0 auto;
+}
+
+.js-loading-text {
+	text-align: center;
+}
+

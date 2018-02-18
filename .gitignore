@@ -1,0 +1,44 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Django stuff:
+*.log
+local_settings.py
+**/staticfiles/**
+
+# dotenv
+.env
+
+# media files
+registration/media/
+*~.lock*
+.~lock.tracr.xlsx#
+.~lock.sna.xlsx#
+.~lock.guide.xlsx#
+.~lock.batches_only.xlsx#
+.~lock.pna.xlsx#
+

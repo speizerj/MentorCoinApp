@@ -1,0 +1,19 @@
+{%  extends "base.html" %}
+{% load socialaccount %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="">
+            <div class="well">
+                <h4>Sign in With GitHub</h4>
+            </div>
+
+            <a class="btn btn-block btn-social btn-github" href="{% provider_login_url "github" %}">
+                <span class="fab fa-github"></span> Sign in with GitHub
+            </a>
+
+            
+        </div>
+    </div>
+{% endblock %}

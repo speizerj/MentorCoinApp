@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block head_title %}MentorCoin{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% load static %}
+
+    {% block config %}
+      <script>
+        var activeNav;
+      </script>
+    {% endblock %}
+
+    {% block head_links %}
+        <link rel="stylesheet" href="{% static 'vendor/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+        <script src="{% static 'vendor/jquery.min.js' %}"></script>
+        <script src="{% static 'vendor/bootstrap.min.js' %}"></script>
+        <script src="{% static 'vendor/bignumber.js' %}"></script>
+    {% endblock %}
+
+
+    </head>
+    <body style="padding-top:0px">
+
+        <div class="container-fluid">
+            <div class="content">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert
+                                    {% if message.level_tag == 'error' %}
+                                        alert-danger
+                                    {% else %}
+                                        alert-{{ message.level_tag }}
+                                    {% endif %}
+                                ">
+                                    <p>{{ message }}</p>
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                {% block content %}
+
+                {% endblock %}
+            </div>
+        </div>
+        {% block outside_container_content %}
+        {% endblock %}
+
+        {% block footer_scripts %}
+            <script src="{% static 'scripts/main.js' %}"></script>
+        {% endblock %}
+    </body>
+</html>
+

@@ -1,0 +1,66 @@
+{%  extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+            <div class="well">
+                <h4>Fund an Issue</h4>
+                <!-- TODO Add robot image <img src="./prime.png"> -->
+                <img src="{% static 'images/prime.png' %}">
+            </div>
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                    <p class="text-danger">{{ error }}</p>
+                {% endfor %}
+            {% endif %}
+            <form action="" method="post" class="form-horizontal">
+                {% load widget_tweaks %}
+                {% csrf_token %}
+
+<!--                 {% for field in form.hidden_fields %}
+                    {{ field }}
+                {% endfor %} -->
+
+                
+                    <div class="form-group">
+<!--                     {% if field.errors %}
+                        {% for error in field.errors %}
+                            <p class="text-danger">{{ error|escape }}</p>
+                        {% endfor %}
+                    {% endif %} -->
+<!--                         <label class="label-control col-sm-3" for="{{ field.auto_id }}">{{ field.label }}</label>
+                        <div class="col-sm-9">
+                            {{ field|add_class:'form-control' }}
+                        </div> -->
+
+                        <!-- Change this to GitHub Username and fix styling -->
+                        <label class="label-control col-sm-3" for=githubId>GitHub</label> 
+                        <div class="col-sm-9">
+                            <input name='githubId' id="githubId" style="width:100%" type="text" placeholder="mkosowski" value="{% if githubId %}{{githubId}}{%endif%}" />
+                        </div>
+
+                        <label class="label-control col-sm-3" for=issueURL>Issue URL:</label>
+                        <div class="col-sm-9">
+                            <input name='issueURL' id="issueURL" style="width:100%" type="text" placeholder="https://github.com/user/repo/pull/n" value="{% if issueURL %}{{issueURL}}{%endif%}" />
+                        </div>
+
+                        <label class="label-control col-sm-3" for=fundAmount>Amount of ETH</label>
+                        <div class="col-sm-9">
+                            <input name='fundAmount' id="fundAmount" style="width:100%" type="text" placeholder="Example amounts: .1 ETH / 1 ETH/ 1 Lambo" value="{% if fundAmount %}{{fundAmount}}{%endif%}" />
+                        </div>
+
+                        <label class="label-control col-sm-3" for=issueDescription>Issue Description</label>
+                        <div class="col-sm-9">
+                            <textarea name='issueDescription' id="issueDescription" style="width:100%" type="text" value="{% if issueDescription %}{{issueDescription}}{%endif%}">
+                            </textarea>
+                        </div>
+
+                    </div>
+                
+                <button class="form-control btn btn-primary" type="submit" >Fund</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

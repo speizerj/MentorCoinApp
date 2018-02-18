@@ -1,0 +1,2 @@
+cd mentorcoin
+sudo docker-compose up

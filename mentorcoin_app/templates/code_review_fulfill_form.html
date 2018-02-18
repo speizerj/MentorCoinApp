@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="row" style="margin-bottom: 30px;">
+    <div class="col-lg-9">
+        <h2>Fulfill Code Review Request</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="text-danger col-xs-12">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        <form id="code-review-fulfill" action="" method="post" enctype="multipart/form-data">
+            {% load widget_tweaks %}
+            {% csrf_token %}
+
+            {% for field in form.hidden_fields %}
+                {{ field }}
+            {% endfor %}
+
+            <p>Fulfilling Code Review Request for PR: <a href="{{ code_review.pr_url }}">{{ code_review.pr_title }}</a>
+
+            <p>Please describe how you helped mentor the submitting user:</p>
+
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <p class="text-danger col-xs-12">{{ error|escape }}</p>
+                    {% endfor %}
+                {% endif %}
+                    <label class="label-control col-sm-6" for="{{ field.auto_id }}">
+                        {{ field.label }}
+                        {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+                    </label>
+                    <div class="col-sm-9">
+                        {{ field|add_class:'form-control' }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-sm-offset-3" style="margin-top:30px">
+                <input class="form-control btn btn-primary" type="submit" value="Submit" />
+            </div>
+        </form>
+        {{ form.media }}
+    </div>
+</div>
+
+
+<div class="bufficorn-modal" style="display: none">
+    <div class="bufficorn-modal__content">
+        <img class="bufficorn" src="{% static 'images/bufficorn.gif' %}">
+        <h2 class="js-loading-text">Sending bounty data to IPFS...</h2>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer_scripts %}
+    {{ block.super }}
+    <script src="{% static 'scripts/ipfs-js.js' %}"></script>
+    <script src="{% static 'scripts/ipfs.js' %}"></script>
+    <script src="{% static 'scripts/code_review_fulfill.js' %}"></script>
+{% endblock %}

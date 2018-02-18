@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="row" style="margin-bottom: 30px;">
+    <div class="col-lg-9">
+        <h2 style="width: 1632px; text-align: center">Create New Code Review Request</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6" style="margin: auto">
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <p class="text-danger col-xs-12">{{ error }}</p>
+            {% endfor %}
+        {% endif %}
+        <form id="code-review-create" action="{{ action }}" method="post" enctype="multipart/form-data">
+            {% load widget_tweaks %}
+            {% csrf_token %}
+
+            {% for field in form.hidden_fields %}
+                {{ field }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <p class="text-danger col-xs-12">{{ error|escape }}</p>
+                    {% endfor %}
+                {% endif %}
+                    <label class="label-control col-sm-6" style="padding-left: 115px" for="{{ field.auto_id }}">
+                        {{ field.label }}
+                        {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+
+                    </label>
+                    <div class="col-sm-9" style="margin: auto">
+                        {{ field|add_class:'form-control' }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="col-sm-offset-3" style="margin-top:30px; text-align: center">
+                <input class="form-control btn btn-primary" style="width: 180px" type="submit" value="Submit Code Review!" />
+            </div>
+        </form>
+        {{ form.media }}
+    </div>
+</div>
+
+
+<div class="bufficorn-modal" style="display: none">
+    <div class="bufficorn-modal__content">
+        <img class="bufficorn" src="{% static 'images/bufficorn.gif' %}">
+        <h2 class="js-loading-text">Sending bounty data to IPFS...</h2>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer_scripts %}
+    {{ block.super }}
+    <script src="{% static 'scripts/ipfs-js.js' %}"></script>
+    <script src="{% static 'scripts/ipfs.js' %}"></script>
+    <script src="{% static 'scripts/code_review_create.js' %}"></script>
+{% endblock %}

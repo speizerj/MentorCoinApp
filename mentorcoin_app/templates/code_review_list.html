@@ -1,0 +1,129 @@
+{%  extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+    <div>
+        <div>
+            <div>
+
+                <ul class="nav nav-pills" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="open-tab" data-toggle="tab" href="#open" role="tab" aria-controls="open" aria-selected="true">Open <span class="badge badge-light">{{ view.total_number_open }}</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="claimed-tab" data-toggle="tab" href="#claimed" role="tab" aria-controls="claimed" aria-selected="false">Claimed <span class="badge badge-light">{{ view.total_number_claimed }}</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="closed-tab" data-toggle="tab" href="#closed" role="tab" aria-controls="closed" aria-selected="false">Closed</a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+
+                  <div class="tab-pane fade show active" id="open" role="tabpanel" aria-labelledby="open-tab">
+                      <div style="margin-top: 50px">
+                        <h2 style="display: inline">Open Code Review Requests  </h2>
+                        <h4 style="display: inline">({{ view.total_number_open }} worth {{ view.total_amount_open }} ETH)</h4>
+                      </div>
+
+                    <table class="table table-striped table-hover" style="width: 100%; margin-top: 25px">
+                        <tr style="background: white; font-size: 24px">
+                            <th>Pull Request Title</th>
+                            <th>URL</th>
+                            <th>Submitted By</th>
+                            <th>Amount (ETH)</th>
+                            <th></th>
+                        </tr>
+                    
+                    {% for object in codereview_list %}
+                        {% if object.status == 'open' %}
+                            <tr>
+                                <td style="padding-top: 15px; vertical-align: middle">
+                                    <a href="/code-review/detail/{{ object.pk }}">
+                                        {{ object.pr_title }}
+                                    </a>
+                                </td>
+                                <td style="padding-top: 15px; vertical-align: middle">
+                                    <a href="{{ object.pr_url }}">
+                                        {{ object.pr_url }}
+                                    </a>
+                                </td>
+                                <td style="padding-top: 15px; vertical-align: middle">
+                                    <a href="https://github.com/{{ object.submitted_by.username }}">
+                                        {{ object.submitted_by.username }}
+                                    </a>
+                                </td>
+                                <td style="padding-left: 25px; padding-top: 15px; vertical-align: middle">{{ object.amount }}</td>
+                                <td>
+                                    {% if request.user.socialaccount_set.all.0 %}
+                                        <a href="{% url 'claim_code_review' object.pk %}" class="btn btn-primary btn-sm">Claim</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+
+                    </table>
+                  </div>
+                  <div class="tab-pane fade" id="claimed" role="tabpanel" aria-labelledby="claimed-tab">
+                                      <div style="margin-top: 50px">
+                    <h2 style="display: inline">Claimed Code Review Requests  </h2>
+                    <h4 style="display: inline">({{ view.total_number_claimed }} worth {{ view.total_amount_claimed }} ETH)</h4>
+                </div>
+
+                    <table class="table table-striped table-hover" style="width: 100%; margin-top: 25px">
+                        <tr style="background: white; font-size: 24px">
+                            <th>Pull Request Title</th>
+                            <th>URL</th>
+                            <th>Submitted By</th>
+                            <th>Claimed By</th>
+                            <th>Amount (ETH)</th>
+                            <th></th>
+                        </tr>
+                    
+                    {% for object in codereview_list %}
+                        {% if object.status == 'claimed' %}
+                            <tr>
+                                <td style="padding-top: 15px; vertical-align: middle">
+                                    <a href="/code-review/detail/{{ object.pk }}">
+                                        {{ object.pr_title }}
+                                    </a>
+                                </td>
+                                <td style="padding-top: 15px; vertical-align: middle">
+                                    <a href="{{ object.pr_url }}">
+                                        {{ object.pr_url }}
+                                    </a>
+                                </td>
+                                <td style="padding-top: 15px; vertical-align: middle">
+                                    <a href="https://github.com/{{ object.submitted_by.username }}">
+                                        {{ object.submitted_by.username }}
+                                    </a>
+                                </td>
+                                <td style="padding-top: 15px; vertical-align: middle">
+                                    <a href="https://github.com/{{ object.claimed_by.username }}">
+                                        {{ object.claimed_by.username }}
+                                        <img style="width:20px" src="{{ object.claimed_by.socialaccount_set.all.0.get_avatar_url }}">
+                                    </a>
+                                </td>
+                                <td style="padding-left: 25px; padding-top: 15px; vertical-align: middle">{{ object.amount }}</td>
+                                <td>
+                                    {% if request.user.socialaccount_set.all.0 and request.user == object.claimed_by %}
+                                        <a href="{% url 'unclaim_code_review' object.pk %}" class="btn btn-warning btn-sm">Unclaim</a>
+                                        <a href="{% url 'fulfill_code_review' object.pk %}" class="btn btn-success btn-sm">Fulfill</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+
+                    </table>
+                  </div>
+                  <div class="tab-pane fade" id="closed" role="tabpanel" aria-labelledby="closed-tab">
+                      
+                  </div>
+                </div>
+
+            </div>
+        </div>
+</div>
+{% endblock %}
